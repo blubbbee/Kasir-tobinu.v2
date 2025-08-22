@@ -1,21 +1,21 @@
-# Tobinu Mini Cafe — Kasir Pintar (v2, Logo + Foto Menu + Background)
+# Tobinu Café — Kasir Pintar (PWA)
 
-Fitur baru:
-- Upload **Logo** (tampil di header & tersimpan lokal)
-- Upload **Gambar Menu** per produk (thumbnail di grid & keranjang)
-- Ganti **Background** (gambar atau warna)
-- Tetap offline-ready (PWA), riwayat, diskon/pajak/service, export CSV
+Aplikasi kasir untuk Tobinu Café. Desain premium, **offline-ready**, dan bisa dipasang di iPad/iPhone seperti aplikasi asli.
 
-## Cara Pakai
-1. Ekstrak ZIP → buka `index.html` di browser (Chrome/Safari/Edge).
-2. Klik **Pengaturan** untuk upload logo & background (gambar/warna).
-3. Klik **Tambah Produk Baru** untuk menambah menu beserta gambar.
-4. Semua data tersimpan di perangkat (localStorage).
+## Fitur
+- Keranjang, pajak 10%, service 5%, diskon (Rp/%), kembalian
+- Tipe bayar: Cash / QRIS / Kartu
+- Produk dengan **gambar**, kategori, dan tag
+- **Pengaturan**: upload logo, ganti background (gambar/warna)
+- **Riwayat harian**, **Export CSV**, cetak struk
+- PWA: add to home screen + offline
 
-> Untuk instal seperti aplikasi (PWA), sebaiknya host di HTTPS lalu “Add to Home Screen”.
+## Deploy ke GitHub Pages
+1. Buat repo dan upload semua file/folder ini (bukan dalam ZIP).
+2. Settings → Pages → Branch `main` + Folder `/ (root)` → Save.
+3. Buka URL `https://<username>.github.io/<repo>/` di Safari.
+4. Share → **Add to Home Screen** untuk memasang ikon aplikasi.
 
 ## Catatan
-- Gambar disimpan sebagai data URI di localStorage. Untuk banyak gambar HD, pertimbangkan hosting file di server lalu simpan URL-nya.
-- Struk masih format teks agar kompatibel ke printer sistem.
-
-Selamat jualan! ☕️
+- Semua data disimpan di perangkat (localStorage).
+- Gambar produk disarankan ukuran sedang agar hemat storage.

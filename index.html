@@ -1,106 +1,34 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tobinu Mini Cafe — Kasir Pintar</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tobinu Café — Kasir Pintar</title>
   <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#111">
-  <style>
-    :root{
-      --bg:#0f1115;--card:#171923;--muted:#8a8f98;--text:#f3f4f6;--acc:#22c55e;--acc2:#3b82f6;--danger:#ef4444;--border:#232633;
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial;
-      background:var(--bg);
-      color:var(--text);
-      display:flex;flex-direction:column;min-height:100vh;
-      background-image: var(--bg-image, linear-gradient(180deg,#0d0f14, #121420));
-      background-size:cover;background-position:center center;background-attachment:fixed;
-    }
-    header{
-      display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--border);
-      background:rgba(17,19,29,.6);backdrop-filter:blur(6px);position:sticky;top:0;z-index:50;
-    }
-    header h1{font-size:16px;margin:0;font-weight:700;letter-spacing:.3px}
-    header .badge{font-size:12px;color:#a0a6b0;border:1px solid var(--border);padding:4px 8px;border-radius:999px}
-    .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.4px}
-    .brand img{height:28px;width:28px;object-fit:contain;border-radius:6px;border:1px solid var(--border);background:#0e1120}
-    .wrap{display:grid;grid-template-columns: 1.2fr .8fr;gap:16px;padding:16px;flex:1;min-height:0}
-    .panel{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;min-height:0}
-    .panel h3{margin:0;padding:12px 14px;border-bottom:1px solid var(--border);font-size:14px;letter-spacing:.2px;background:#141724}
-    .products{display:grid;grid-template-columns:repeat(4,minmax(120px,1fr));gap:10px;padding:12px;overflow:auto}
-    .prod{border:1px solid var(--border);background:#131623;border-radius:12px;padding:10px;display:flex;flex-direction:column;gap:8px;cursor:pointer;transition:transform .08s ease, border .2s}
-    .prod:hover{transform:translateY(-1px);border-color:#2a3043}
-    .prod .name{font-weight:600}
-    .prod .meta{font-size:12px;color:var(--muted)}
-    .thumb{width:100%;aspect-ratio:1.2/1;border-radius:8px;object-fit:cover;border:1px solid var(--border);background:#0e1220}
-    .toolbar{display:flex;gap:8px;padding:10px;border-bottom:1px solid var(--border);flex-wrap:wrap}
-    input,select,button{font:inherit}
-    .input{background:#0f1320;border:1px solid var(--border);color:var(--text);border-radius:10px;padding:10px}
-    .btn{border:1px solid var(--border);background:#0f1320;color:var(--text);border-radius:10px;padding:10px 12px;cursor:pointer}
-    .btn.primary{background:linear-gradient(180deg,#1f8bff,#3b82f6);border-color:#2f61c7;color:white;font-weight:700}
-    .btn.green{background:linear-gradient(180deg,#16a34a,#22c55e);border-color:#177e44;color:white;font-weight:700}
-    .btn.ghost{background:transparent}
-    .btn.danger{background:linear-gradient(180deg,#ef4444,#dc2626);color:white;font-weight:700;border-color:#a11d1d}
-    .cart{display:flex;flex-direction:column;gap:8px;padding:12px;overflow:auto}
-    .cart-item{display:grid;grid-template-columns: auto 1fr auto auto;gap:8px;align-items:center;border:1px solid var(--border);border-radius:10px;padding:8px;background:#121527}
-    .qty{display:flex;align-items:center;gap:4px}
-    .qty button{width:28px;height:28px;border-radius:8px;border:1px solid var(--border);background:#0f1320;color:var(--text);cursor:pointer}
-    .row{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:6px 12px;color:#c5c9d3}
-    .row strong{color:var(--text)}
-    .pay{padding:12px;border-top:1px solid var(--border);background:#121527;display:flex;flex-direction:column;gap:8px}
-    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-    .fine{font-size:12px;color:var(--muted)}
-    footer{padding:10px 14px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;color:#9aa0aa}
-    .pill{padding:4px 8px;border:1px solid var(--border);border-radius:999px;font-size:12px}
-    .hidden{display:none !important}
-    .category-tabs{display:flex;gap:8px;padding:8px 10px;border-bottom:1px solid var(--border);flex-wrap:wrap;background:#121527}
-    .category-tabs .tab{padding:6px 10px;border:1px solid var(--border);border-radius:999px;cursor:pointer;font-size:12px;color:#c7cbd4;background:#0f1320}
-    .category-tabs .tab.active{background:#1b2138;border-color:#2b3252}
-    @media (max-width: 1000px){
-      .wrap{grid-template-columns: 1fr}
-      .products{grid-template-columns: repeat(2, 1fr)}
-    }
-    .notice{padding:10px 12px;font-size:12px;color:#cfd3dc;background:#0f1320;border-top:1px dashed var(--border)}
-    .note{font-size:12px;opacity:.9}
-    .search{flex:1}
-    .tag{font-size:10px;border:1px solid var(--border);padding:2px 6px;border-radius:999px;color:#c7ccda}
-    .spacer{flex:1}
-    .right{display:flex;gap:8px;align-items:center}
-    dialog{border:1px solid var(--border);background:#0f1320;color:var(--text);border-radius:12px}
-    dialog .head{padding:10px 12px;border-bottom:1px solid var(--border);font-weight:700}
-    dialog .body{padding:12px;display:flex;flex-direction:column;gap:10px}
-    dialog .actions{padding:12px;border-top:1px solid var(--border);display:flex;gap:8px;justify-content:flex-end}
-    .mini{font-size:12px;color:#b7bcc7}
-    .upl{display:flex;flex-direction:column;gap:6px}
-    .upl input[type="file"]{background:#0f1320;border:1px dashed var(--border);padding:8px;border-radius:10px}
-    .tiny{font-size:11px;color:#9aa0aa}
-    .logo-preview{height:34px;border:1px solid var(--border);border-radius:8px;background:#0f1320;padding:4px}
-    .bg-preview{height:48px;border:1px solid var(--border);border-radius:8px;background:#0f1320;background-size:cover;background-position:center}
-    .editor-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-    .prodform{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-    .prodform .full{grid-column:1/-1}
-  </style>
+  <meta name="theme-color" content="#00b45a">
+  <link rel="icon" href="assets/icon-192.png">
+  <link rel="apple-touch-icon" href="assets/icon-192.png">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
+  <header class="topbar">
     <div class="brand">
-      <img id="logoImg" class="hidden" alt="logo">
-      <span id="brandText">Tobinu Mini Cafe</span>
+      <img id="logoImg" src="assets/logo.png" alt="logo">
+      <div class="titles">
+        <h1>Tobinu Café</h1>
+        <span class="badge">Kasir Pintar (PWA)</span>
+      </div>
     </div>
-    <span class="badge">Kasir Pintar (Offline-Ready)</span>
-    <span class="spacer"></span>
-    <button class="btn pill" id="btn-settings">Pengaturan</button>
-    <button class="btn pill" id="btn-export">Export CSV</button>
-    <button class="btn pill" id="btn-clear-day">Reset Hari</button>
-    <button class="btn pill" id="btn-receipts">Riwayat</button>
-    <button class="btn pill" id="btn-print">Cetak Struk</button>
+    <nav class="actions">
+      <button class="pill" id="btn-settings">Pengaturan</button>
+      <button class="pill" id="btn-export">Export CSV</button>
+      <button class="pill" id="btn-clear-day">Reset Hari</button>
+      <button class="pill" id="btn-receipts">Riwayat</button>
+      <button class="pill" id="btn-print">Cetak Struk</button>
+    </nav>
   </header>
 
-  <div class="wrap">
+  <main class="wrap">
     <section class="panel">
       <h3>Menu</h3>
       <div class="toolbar">
@@ -113,7 +41,7 @@
       </div>
       <div class="category-tabs" id="category-tabs"></div>
       <div class="products" id="products"></div>
-      <div class="notice">Tips: klik “Tambah Produk Baru” untuk menambahkan gambar menu. Logo & background bisa diatur dari menu **Pengaturan**.</div>
+      <div class="notice">Tips: tambahkan gambar menu & ganti background dari **Pengaturan**. Data tersimpan lokal, aplikasi bisa offline.</div>
     </section>
 
     <section class="panel">
@@ -123,16 +51,13 @@
       <div class="row"><span>Pajak (10%)</span><strong id="tax">Rp0</strong></div>
       <div class="row"><span>Service (5%)</span><strong id="svc">Rp0</strong></div>
       <div class="row"><span>Diskon</span><strong id="disc">Rp0</strong></div>
-      <div class="row" style="border-top:1px dashed var(--border)"><span>Total</span><strong id="total">Rp0</strong></div>
-
+      <div class="row total"><span>Total</span><strong id="total">Rp0</strong></div>
       <div class="pay">
         <div class="grid2">
           <div>
             <label class="fine">Tipe Bayar</label>
             <select id="paytype" class="input">
-              <option>Cash</option>
-              <option>QRIS</option>
-              <option>Kartu</option>
+              <option>Cash</option><option>QRIS</option><option>Kartu</option>
             </select>
           </div>
           <div>
@@ -149,8 +74,8 @@
         <div class="grid2">
           <div>
             <label class="fine">Aktifkan Pajak & Service</label><br>
-            <label><input type="checkbox" id="taxOn" checked> Pajak 10%</label>&nbsp;&nbsp;
-            <label><input type="checkbox" id="svcOn" checked> Service 5%</label>
+            <label><input type="checkbox" id="taxOn" checked> Pajak 10%</label>
+            <label style="margin-left:12px"><input type="checkbox" id="svcOn" checked> Service 5%</label>
           </div>
           <div>
             <label class="fine">Bayar</label>
@@ -161,68 +86,43 @@
         <button class="btn green" id="btn-charge">Proses Pembayaran</button>
       </div>
     </section>
-  </div>
+  </main>
 
   <footer>
-    <div class="note">© <span id="year"></span> Tobinu Mini Cafe • Mode offline & ekspor CSV • Simpan lokal</div>
-    <div class="right">
-      <span class="pill" id="today-stats">Hari ini: 0 transaksi • Rp0</span>
-    </div>
+    <div>© <span id="year"></span> Tobinu Café — Mode Offline • Export CSV • Simpan Lokal</div>
+    <div class="pill" id="today-stats">Hari ini: 0 transaksi • Rp0</div>
   </footer>
 
-  <!-- Receipt Modal -->
-  <dialog id="modal" style="max-width:480px;width:90%">
+  <!-- Dialogs -->
+  <dialog id="modal" class="dlg">
     <div class="head" id="modalTitle">Struk</div>
-    <div class="body" id="modalBody" style="max-height:60vh;overflow:auto;white-space:pre-wrap;font-family:ui-monospace, Menlo, Consolas;"></div>
-    <div class="actions">
-      <button class="btn" id="modalClose">Tutup</button>
-      <button class="btn primary" id="modalPrintNow">Cetak</button>
-    </div>
+    <div class="body" id="modalBody"></div>
+    <div class="actions"><button class="btn" id="modalClose">Tutup</button><button class="btn primary" id="modalPrintNow">Cetak</button></div>
   </dialog>
 
-  <!-- Settings Modal -->
-  <dialog id="dlgSettings" style="max-width:640px;width:95%">
+  <dialog id="dlgSettings" class="dlg wide">
     <div class="head">Pengaturan Tampilan</div>
     <div class="body">
-      <div class="upl">
-        <div class="mini">Logo Cafe</div>
-        <div class="editor-grid">
-          <div>
-            <input id="logoFile" type="file" accept="image/*">
-            <div class="tiny">PNG/JPG. Disimpan lokal perangkat.</div>
-          </div>
-          <div style="text-align:right">
-            <img id="logoPreview" class="logo-preview hidden">
-            <div class="tiny">Pratinjau</div>
-            <button class="btn tiny" id="btnDelLogo" style="margin-top:6px">Hapus Logo</button>
-          </div>
+      <div class="grid2">
+        <div>
+          <div class="mini">Logo Café</div>
+          <input id="logoFile" type="file" accept="image/*">
+          <img id="logoPreview" class="logo-preview">
+          <button class="btn tiny" id="btnDelLogo">Hapus Logo</button>
+        </div>
+        <div>
+          <div class="mini">Background</div>
+          <input id="bgFile" type="file" accept="image/*">
+          <input id="bgColor" class="input" placeholder="Warna (mis: #10121a atau green)">
+          <div class="bg-preview" id="bgPreview"></div>
+          <button class="btn tiny" id="btnDelBg">Hapus Background</button>
         </div>
       </div>
-
-      <div class="upl">
-        <div class="mini">Background</div>
-        <div class="editor-grid">
-          <div>
-            <input id="bgFile" type="file" accept="image/*">
-            <div class="tiny">Upload gambar untuk background.</div>
-          </div>
-          <div>
-            <input id="bgColor" class="input" type="text" placeholder="Warna (mis: #10121a or rgba(...) or nama warna)">
-            <div class="tiny">Atau pilih warna. Kosongkan untuk pakai gradien default.</div>
-          </div>
-        </div>
-        <div class="bg-preview" id="bgPreview"></div>
-        <div><button class="btn tiny" id="btnDelBg">Hapus Background</button></div>
-      </div>
     </div>
-    <div class="actions">
-      <button class="btn" id="btnCloseSettings">Tutup</button>
-      <button class="btn primary" id="btnSaveSettings">Simpan</button>
-    </div>
+    <div class="actions"><button class="btn" id="btnCloseSettings">Tutup</button><button class="btn primary" id="btnSaveSettings">Simpan</button></div>
   </dialog>
 
-  <!-- Product Editor Modal -->
-  <dialog id="dlgProduct" style="max-width:560px;width:95%">
+  <dialog id="dlgProduct" class="dlg">
     <div class="head" id="prodHead">Produk Baru</div>
     <div class="body">
       <form id="prodForm" class="prodform">
@@ -236,399 +136,9 @@
         </div>
       </form>
     </div>
-    <div class="actions">
-      <button class="btn" id="btnCancelProd">Batal</button>
-      <button class="btn green" id="btnSaveProd">Simpan Produk</button>
-    </div>
+    <div class="actions"><button class="btn" id="btnCancelProd">Batal</button><button class="btn green" id="btnSaveProd">Simpan Produk</button></div>
   </dialog>
 
-  <script>
-    // --- Utilities ---
-    const fmt = n => new Intl.NumberFormat('id-ID', {style:'currency', currency:'IDR', maximumFractionDigits:0}).format(n||0);
-    const uid = () => Math.random().toString(36).slice(2,10);
-    const todayKey = () => new Date().toISOString().slice(0,10);
-    const LS = {
-      get(k, d){ try{ return JSON.parse(localStorage.getItem(k)) ?? d }catch{ return d; } },
-      set(k,v){ localStorage.setItem(k, JSON.stringify(v)); }
-    };
-    const readFile = (file) => new Promise((res,rej)=>{
-      if(!file) return res(null);
-      const fr = new FileReader();
-      fr.onload = () => res(fr.result);
-      fr.onerror = rej;
-      fr.readAsDataURL(file);
-    });
-
-    // --- Data ---
-    const defaultProducts = [
-      {id:uid(), name:"Americano", price:15000, cat:"Coffee", tag:"Hot/Ice", img:null},
-      {id:uid(), name:"Cappuccino", price:22000, cat:"Coffee", tag:"Hot/Ice", img:null},
-      {id:uid(), name:"Latte", price:24000, cat:"Coffee", tag:"Hot/Ice", img:null},
-      {id:uid(), name:"Es Kopi Susu", price:18000, cat:"Coffee", tag:"Signature", img:null},
-      {id:uid(), name:"Matcha Latte", price:23000, cat:"Tea & Latte", tag:"Popular", img:null},
-      {id:uid(), name:"French Fries", price:16000, cat:"Snack", tag:"", img:null},
-      {id:uid(), name:"Toast Coklat", price:15000, cat:"Snack", tag:"", img:null},
-      {id:uid(), name:"Mineral Water", price:7000, cat:"Others", tag:"", img:null}
-    ];
-    const state = {
-      products: LS.get('tb_products', defaultProducts),
-      cart: [],
-      discVal: 0,
-      discType: 'amount',
-      payAmt: 0,
-      payType: 'Cash'
-    };
-
-    // --- Branding / Background load ---
-    function applyBrand(){
-      const logo = LS.get('tb_logo', null);
-      const el = document.getElementById('logoImg');
-      if(logo){
-        el.src = logo; el.classList.remove('hidden');
-        document.getElementById('brandText').textContent = 'Tobinu Mini Cafe';
-      }else{
-        el.classList.add('hidden');
-      }
-      // settings preview
-      const prev = document.getElementById('logoPreview');
-      if(prev){ if(logo){ prev.src = logo; prev.classList.remove('hidden'); } else prev.classList.add('hidden'); }
-    }
-    function applyBackground(){
-      const bgImg = LS.get('tb_bg_image', null);
-      const bgColor = LS.get('tb_bg_color', '');
-      if(bgColor && !bgImg){
-        document.body.style.setProperty('--bg-image', 'none');
-        document.body.style.background = bgColor;
-      }else{
-        document.body.style.background = '';
-        if(bgImg){
-          document.body.style.setProperty('--bg-image', `url(${bgImg})`);
-        }else{
-          document.body.style.setProperty('--bg-image', 'linear-gradient(180deg,#0d0f14, #121420)');
-        }
-      }
-      const prev = document.getElementById('bgPreview');
-      if(prev){
-        if(bgImg){ prev.style.backgroundImage = `url(${bgImg})`; }
-        else{ prev.style.backgroundImage = 'linear-gradient(180deg,#0d0f14, #121420)'; }
-      }
-      const bgColorInput = document.getElementById('bgColor');
-      if(bgColorInput) bgColorInput.value = bgColor || '';
-    }
-
-    // --- DOM ---
-    const $ = sel => document.querySelector(sel);
-    const productsEl = $('#products');
-    const cartEl = $('#cart');
-    const searchEl = $('#search');
-    const catSel = $('#sel-category');
-    const tabsEl = $('#category-tabs');
-
-    function loadCategories(){
-      const cats = ['all', ...new Set(state.products.map(p=>p.cat || 'Others'))];
-      catSel.innerHTML = cats.map(c=>`<option value="${c}">${c==='all'?'Semua':c}</option>`).join('');
-      tabsEl.innerHTML = cats.map((c,i)=>`<button class="tab ${i===0?'active':''}" data-cat="${c}">${c==='all'?'Semua':c}</button>`).join('');
-      tabsEl.querySelectorAll('.tab').forEach(btn=>btn.addEventListener('click',()=>{
-        tabsEl.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
-        btn.classList.add('active');
-        renderProducts();
-      }));
-    }
-
-    function renderProducts(){
-      const q = searchEl.value.trim().toLowerCase();
-      const activeCat = tabsEl.querySelector('.tab.active')?.dataset.cat || 'all';
-      let list = state.products;
-      if(activeCat!=='all') list = list.filter(p=>p.cat===activeCat);
-      if(q){
-        if(/^\d+$/.test(q)){
-          productsEl.innerHTML = `<div class="prod" style="grid-column:1/-1;border-style:dashed" data-manual="${q}">
-            <div class="name">Tambah Manual: ${fmt(Number(q))}</div>
-            <div class="meta">Tekan untuk memasukkan item manual dgn harga tersebut</div>
-          </div>` + list.map(P).join('');
-          productsEl.querySelector('[data-manual]')?.addEventListener('click', e=>{
-            addToCart({id:uid(), name:"Item Manual", price:Number(q)});
-          });
-        }else{
-          list = list.filter(p=> p.name.toLowerCase().includes(q) || (p.cat||'').toLowerCase().includes(q));
-          productsEl.innerHTML = list.map(P).join('');
-        }
-      }else{
-        productsEl.innerHTML = list.map(P).join('');
-      }
-      productsEl.querySelectorAll('.prod').forEach(div=>div.addEventListener('click',()=>{
-        const id = div.dataset.id;
-        const prod = state.products.find(p=>p.id===id);
-        if(prod) addToCart(prod);
-      }));
-      function P(p){
-        return `<div class="prod" data-id="${p.id}">
-          ${p.img?`<img class="thumb" src="${p.img}" alt="${p.name}">`:`<div class="thumb" style="display:grid;place-items:center;font-size:12px;color:#94a3b8">No Image</div>`}
-          <div class="name">${p.name}</div>
-          <div class="meta">${p.cat||'Others'} • <strong>${fmt(p.price)}</strong></div>
-          ${p.tag?`<div class="tag">${p.tag}</div>`:''}
-        </div>`;
-      }
-    }
-
-    function addToCart(p){
-      const ex = state.cart.find(i=>i.id===p.id && !i.manual);
-      if(ex){ ex.qty += 1; }
-      else{
-        state.cart.push({id:p.id, name:p.name, price:p.price, qty:1, img:p.img||null, manual:!state.products.find(pp=>pp.id===p.id)});
-      }
-      renderCart();
-    }
-
-    function renderCart(){
-      cartEl.innerHTML = '';
-      state.cart.forEach((it, idx)=>{
-        const row = document.createElement('div');
-        row.className = 'cart-item';
-        row.innerHTML = `
-          ${it.img?`<img src="${it.img}" style="width:42px;height:42px;border-radius:8px;object-fit:cover;border:1px solid var(--border)">`:`<div style="width:42px;height:42px;border:1px solid var(--border);border-radius:8px;background:#0e1220"></div>`}
-          <div>
-            <div style="font-weight:600">${it.name}</div>
-            <div class="fine">${fmt(it.price)} ${it.manual?'<span class="tag">manual</span>':''}</div>
-          </div>
-          <div class="qty">
-            <button data-act="dec">-</button>
-            <div style="min-width:28px;text-align:center">${it.qty}</div>
-            <button data-act="inc">+</button>
-          </div>
-          <div style="text-align:right">
-            <div><strong>${fmt(it.qty*it.price)}</strong></div>
-            <button class="btn ghost" data-act="rm" style="font-size:12px">Hapus</button>
-          </div>
-        `;
-        row.querySelector('[data-act="inc"]').onclick=()=>{it.qty++; renderCart();};
-        row.querySelector('[data-act="dec"]').onclick=()=>{it.qty=Math.max(1,it.qty-1); renderCart();};
-        row.querySelector('[data-act="rm"]').onclick=()=>{state.cart.splice(idx,1); renderCart();};
-        cartEl.appendChild(row);
-      });
-      recalc();
-    }
-
-    function recalc(){
-      const subtotal = state.cart.reduce((a,b)=>a + b.qty*b.price, 0);
-      const tax = $('#taxOn').checked ? Math.round(subtotal*0.10) : 0;
-      const svc = $('#svcOn').checked ? Math.round(subtotal*0.05) : 0;
-      const discVal = Number($('#discVal').value||0);
-      const discType = $('#discType').value;
-      let disc = 0;
-      disc = discType==='percent' ? Math.round((subtotal+tax+svc) * (discVal/100)) : discVal;
-      const total = Math.max(0, subtotal + tax + svc - disc);
-      const payAmt = Number($('#payAmt').value||0);
-      const change = Math.max(0, payAmt - total);
-
-      $('#subtot').textContent = fmt(subtotal);
-      $('#tax').textContent = fmt(tax);
-      $('#svc').textContent = fmt(svc);
-      $('#disc').textContent = fmt(disc);
-      $('#total').textContent = fmt(total);
-      $('#change').textContent = fmt(change);
-
-      return {subtotal,tax,svc,disc,total,change};
-    }
-
-    function charge(){
-      if(state.cart.length===0){ alert('Keranjang kosong'); return; }
-      const sums = recalc();
-      const payType = $('#paytype').value;
-      const payAmt = Number($('#payAmt').value||0);
-      if(payType==='Cash' && payAmt < sums.total){
-        if(!confirm('Uang cash kurang dari total. Lanjut?')) return;
-      }
-      const receipt = {
-        id: uid(),
-        time: new Date().toLocaleString('id-ID'),
-        items: state.cart.map(({name,price,qty})=>({name,price,qty})),
-        ...sums,
-        payType
-      };
-      const key = 'tb_sales_'+todayKey();
-      const arr = LS.get(key, []);
-      arr.push(receipt);
-      LS.set(key, arr);
-      updateTodayStats();
-      showReceipt(receipt);
-      state.cart = [];
-      renderCart();
-      $('#payAmt').value='';
-    }
-
-    function showReceipt(rc){
-      const lines = [];
-      const logo = LS.get('tb_logo', null);
-      lines.push('Tobinu Mini Cafe');
-      lines.push('Jl. — — —');
-      lines.push('');
-      lines.push(`Waktu : ${rc.time}`);
-      lines.push('--------------------------');
-      rc.items.forEach(it=>{
-        lines.push(`${it.qty} x ${it.name}`);
-        lines.push(`    @${fmt(it.price)}  = ${fmt(it.qty*it.price)}`);
-      });
-      lines.push('--------------------------');
-      lines.push(`Subtotal  : ${fmt(rc.subtotal)}`);
-      if(rc.tax) lines.push(`Pajak 10% : ${fmt(rc.tax)}`);
-      if(rc.svc) lines.push(`Service 5%: ${fmt(rc.svc)}`);
-      if(rc.disc) lines.push(`Diskon    : ${fmt(rc.disc)}`);
-      lines.push(`TOTAL     : ${fmt(rc.total)}`);
-      lines.push(`Bayar (${rc.payType}) : ${fmt(rc.subtotal + rc.tax + rc.svc - rc.disc)}`);
-      if(rc.change) lines.push(`Kembalian : ${fmt(rc.change)}`);
-      lines.push('');
-      lines.push('Terima kasih!');
-      openModal('Struk', lines.join('\n'));
-    }
-
-    function openModal(title, body){
-      $('#modalTitle').textContent = title;
-      $('#modalBody').textContent = body;
-      $('#modal').showModal();
-    }
-
-    function showHistory(){
-      const keys = Object.keys(localStorage).filter(k=>k.startsWith('tb_sales_')).sort().reverse();
-      if(keys.length===0){ openModal('Riwayat', 'Belum ada transaksi.'); return; }
-      const parts = [];
-      keys.forEach(k=>{
-        const date = k.replace('tb_sales_','');
-        const arr = LS.get(k,[]);
-        const total = arr.reduce((s,r)=>s+r.total,0);
-        parts.push(`${date} — ${arr.length} transaksi — ${fmt(total)}`);
-        arr.forEach(r=>{
-          parts.push(`  • ${r.time}  ${r.items.map(i=>i.qty+'x '+i.name).join(', ')}  → ${fmt(r.total)}`);
-        });
-      });
-      openModal('Riwayat Penjualan', parts.join('\n'));
-    }
-
-    function updateTodayStats(){
-      const arr = LS.get('tb_sales_'+todayKey(), []);
-      const total = arr.reduce((s,r)=>s+r.total,0);
-      $('#today-stats').textContent = `Hari ini: ${arr.length} transaksi • ${fmt(total)}`;
-    }
-
-    function exportCSV(){
-      const keys = Object.keys(localStorage).filter(k=>k.startsWith('tb_sales_'));
-      let rows = [['date','time','id','item_name','qty','price','subtotal','tax','service','discount','total','pay_type']];
-      keys.forEach(k=>{
-        const date = k.replace('tb_sales_','');
-        LS.get(k,[]).forEach(r=>{
-          r.items.forEach(it=>{
-            rows.push([date, r.time, r.id, it.name, it.qty, it.price, r.subtotal, r.tax, r.svc, r.disc, r.total, r.payType]);
-          });
-        });
-      });
-      const csv = rows.map(r=>r.join(',')).join('\n');
-      const blob = new Blob([csv], {type:'text/csv'});
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href=url; a.download='tobinu-cafe-sales.csv';
-      a.click();
-      URL.revokeObjectURL(url);
-    }
-
-    function clearToday(){
-      if(confirm('Hapus transaksi HARI INI?')){
-        localStorage.removeItem('tb_sales_'+todayKey());
-        updateTodayStats();
-      }
-    }
-
-    // --- SETTINGS LOGIC ---
-    function openSettings(){
-      // load previews
-      applyBrand();
-      applyBackground();
-      $('#dlgSettings').showModal();
-    }
-    async function saveSettings(){
-      const lf = document.getElementById('logoFile').files[0];
-      const bf = document.getElementById('bgFile').files[0];
-      const logoData = await readFile(lf);
-      const bgData = await readFile(bf);
-      const bgColor = document.getElementById('bgColor').value.trim();
-      if(logoData){ LS.set('tb_logo', logoData); }
-      if(bgData){ LS.set('tb_bg_image', bgData); }
-      LS.set('tb_bg_color', bgColor || '');
-      applyBrand();
-      applyBackground();
-      $('#dlgSettings').close();
-    }
-    function delLogo(){ localStorage.removeItem('tb_logo'); applyBrand(); }
-    function delBg(){ localStorage.removeItem('tb_bg_image'); localStorage.removeItem('tb_bg_color'); applyBackground(); }
-
-    // --- PRODUCT EDITOR ---
-    function openProductForm(){
-      $('#prodHead').textContent = 'Produk Baru';
-      $('#prodForm').reset();
-      $('#dlgProduct').showModal();
-    }
-    async function saveProduct(){
-      const name = $('#pname').value.trim();
-      const price = Number($('#pprice').value||0);
-      const cat = $('#pcat').value.trim() || 'Others';
-      const tag = $('#ptag').value.trim();
-      const imgFile = document.getElementById('pimg').files[0];
-      if(!name || !price){ alert('Nama/harga wajib diisi'); return; }
-      const imgData = await readFile(imgFile);
-      const p = {id:uid(), name, price, cat, tag, img: imgData||null};
-      state.products.push(p);
-      LS.set('tb_products', state.products);
-      loadCategories();
-      renderProducts();
-      $('#dlgProduct').close();
-    }
-
-    // events
-    $('#btn-charge').onclick = charge;
-    $('#btn-print').onclick = ()=>window.print();
-    $('#btn-receipts').onclick = showHistory;
-    $('#btn-export').onclick = exportCSV;
-    $('#btn-clear-day').onclick = clearToday;
-    $('#btn-add-manual').onclick = ()=>{
-      const name = prompt('Nama item manual?', 'Item Manual');
-      const price = Number(prompt('Harga (angka saja)?', '10000')||0);
-      if(!price){ alert('Harga tidak valid'); return; }
-      addToCart({id:uid(), name, price});
-    };
-    $('#btn-add-product').onclick = openProductForm;
-    $('#modalClose').onclick = ()=>$('#modal').close();
-    $('#modalPrintNow').onclick = ()=>{ window.print(); };
-    $('#discVal').oninput = recalc;
-    $('#discType').onchange = recalc;
-    $('#taxOn').onchange = recalc;
-    $('#svcOn').onchange = recalc;
-    $('#payAmt').oninput = recalc;
-    $('#paytype').onchange = e=>{ state.payType = e.target.value; };
-    $('#btn-settings').onclick = openSettings;
-    $('#btnCloseSettings').onclick = ()=>$('#dlgSettings').close();
-    $('#btnSaveSettings').onclick = saveSettings;
-    $('#btnDelLogo').onclick = delLogo;
-    $('#btnDelBg').onclick = delBg;
-    $('#btnCancelProd').onclick = ()=>$('#dlgProduct').close();
-    $('#btnSaveProd').onclick = saveProduct;
-
-    searchEl.addEventListener('input', renderProducts);
-    catSel.addEventListener('change', renderProducts);
-    $('#year').textContent = new Date().getFullYear();
-
-    // init
-    applyBrand();
-    applyBackground();
-    loadCategories();
-    renderProducts();
-    renderCart();
-    updateTodayStats();
-
-    // PWA Service Worker
-    if('serviceWorker' in navigator){
-      window.addEventListener('load', ()=>{
-        navigator.serviceWorker.register('./service-worker.js');
-      });
-    }
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
